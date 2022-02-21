@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - run: npm ci
-      - run: npm i -g snyk-delta
+      - run: sudo npm i -g snyk-delta
       - snyk/scan:
           fail-on-issues: false
           additional-arguments: --json --print-deps > snyk-output.json
