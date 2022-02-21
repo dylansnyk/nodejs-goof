@@ -10,6 +10,7 @@ jobs:
       - run: npm ci
       - run: sudo npm i -g snyk-delta
       - snyk/scan:
+          monitor-on-build: false
           fail-on-issues: false
           additional-arguments: --json --print-deps > snyk-output.json
       - run: cat snyk-output.json | snyk-delta --baselineOrg $SNYK_ORG --baselineProject $SNYK_PROJECT
