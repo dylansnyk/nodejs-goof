@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm i -g snyk-delta
-      - snyk/scan
+      - snyk/scan:
           fail-on-issues: false
           additional-arguments: --json --print-deps > snyk-output.json
       - run: cat output snyk-output.json | snyk-delta --baselineOrg $SNYK_ORG --baselineProject $SNYK_PROJECT
