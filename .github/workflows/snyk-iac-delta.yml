@@ -21,7 +21,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
       - name: install snyk-iac-delta
         run: npm install -g snyk-iac-delta
       - name: Run Snyk IaC Delta
