@@ -22,8 +22,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Snyk IaC Delta 
+      - name: install snyk-iac-delta
         run: npm install -g snyk-iac-delta
+      - name: Run Snyk IaC Delta
         run: snyk-iac-delta --baseline iac-baseline.json --current iac-current.json
       
 
