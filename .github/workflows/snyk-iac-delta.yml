@@ -1,5 +1,5 @@
 name: "snyk iac delta"
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,6 +11,11 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Save current IaC scan
+        uses: actions/upload-artifact@v2
+        with:
+          name: current
+          path: iac-current.json
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.base.ref }}
@@ -24,6 +29,10 @@ jobs:
           node-version: '16'
       - name: install snyk-iac-delta
         run: npm install -g snyk-iac-delta
+      - name: Fetch current IaC scan result
+        uses: actions/download-artifact@v2
+        with:
+          name: current
       - name: Run Snyk IaC Delta
         run: snyk-iac-delta --baseline iac-baseline.json --current iac-current.json
       
