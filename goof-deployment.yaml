@@ -39,7 +39,9 @@ spec:
         ports:
         - containerPort: 3001
         - containerPort: 9229
-        resources: {}
+        resources:
+          limits:
+            cpu: "1"
         env: 
           - name: "DOCKER"
             value: "1"

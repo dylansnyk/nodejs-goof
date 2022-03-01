@@ -1,0 +1,29 @@
+name: "snyk iac delta"
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: snyk/actions/setup@master
+      - name: Snyk IaC on current branch
+        run: snyk iac test --json > iac-current.json
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+      - name: Snyk IaC on baseline branch
+        run: snyk iac test --json > iac-baseline.json
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Snyk IaC Delta 
+        run: npm install -g snyk-iac-delta
+        run: snyk-iac-delta --baseline iac-baseline.json --current iac-current.json
+      
+
