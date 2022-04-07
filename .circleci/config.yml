@@ -1,4 +1,6 @@
 version: '2.1'
+orbs:
+  snyk: snyk/snyk@1.1.2
 jobs:
   build:
     docker:
@@ -6,5 +8,10 @@ jobs:
     steps:
       - checkout
       - run: npm ci
-
+      - run: sudo npm i -g snyk-delta
+      - snyk/scan:
+          monitor-on-build: false
+          fail-on-issues: false
+          additional-arguments: --json --print-deps > snyk-output.json
+      - run: cat snyk-output.json | snyk-delta --baselineOrg $SNYK_ORG --baselineProject $SNYK_PROJECT
 workflows: null
