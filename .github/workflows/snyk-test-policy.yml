@@ -9,7 +9,7 @@ jobs:
         uses: snyk/actions/node@master
         continue-on-error: false
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN_COLLABORATOR }}
         with:
           command: test
           args: --severity-threshold=high
