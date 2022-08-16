@@ -3,3 +3,12 @@ exclude:
   code:
     - tests/**
     - test.spec.js
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'snyk:lic:npm:goof:GPL-2.0':
+    - '*':
+        reason: None Given
+        expires: 2032-08-03T17:46:04.147Z
+        created: 2022-07-04T17:46:04.157Z
+patch: {}
