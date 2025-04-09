@@ -12,32 +12,3 @@ ignore:
         expires: 2023-01-13T14:50:13.540Z
         created: 2022-12-14T14:50:13.544Z
 patch: {}
-custom_rules:
-  - id: HardcodedUrl
-    description: >-
-      Use of hardcoded URLs can cause failures in the future if the URL changes.
-      They are also error prone as a dev or QA environment URL may used in place
-      of the production URL by mistake. 
-    severity: high
-    cwe:
-      - CWE-547
-    fix_analysis: Use an environment variable instead to reference a hardcoded URL.
-    rule_code: >
-      StringLiteral<~"(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])">
-    languages:
-      - apex
-      - c
-      - cpp
-      - csharp
-      - go
-      - html
-      - java
-      - javascript
-      - kotlin
-      - php
-      - python
-      - ruby
-      - scala
-      - swift
-      - typescript
-      - vb
