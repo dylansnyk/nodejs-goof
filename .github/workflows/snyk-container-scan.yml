@@ -1,0 +1,33 @@
+name: Snyk Container Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  snyk-container-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t my-app:ci .
+
+      - name: Run Snyk container scan
+        uses: snyk/actions/docker@v3
+        with:
+          image: my-app:ci
+          args: --file=Dockerfile --project-name=${{ github.repository }} --org=${{ secrets.SNYK_ORG_ID }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Upload Snyk scan results to Snyk Web UI
+        if: always()
+        run: echo "Snyk scan results are automatically sent to the Snyk Web UI if SNYK_TOKEN is set."
